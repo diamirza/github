@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: windows
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Free Trial(fdc83886-6911-472f-a2c2-941be9fd7265)'
+    subscriptionId: 'fdc83886-6911-472f-a2c2-941be9fd7265'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'gajananarg'
+    location: 'South India'
+    templateLocation: 'Linked artifact'
+    csmFile: 'README.md'
+    deploymentMode: 'Incremental'
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Free Trial(fdc83886-6911-472f-a2c2-941be9fd7265)'
+    subscriptionId: 'fdc83886-6911-472f-a2c2-941be9fd7265'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'gajananarg'
+    location: 'South India'
+    templateLocation: 'Linked artifact'
+    csmFile: 'README.md'
+    deploymentMode: 'Incremental'
+setting
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'ABCD'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
